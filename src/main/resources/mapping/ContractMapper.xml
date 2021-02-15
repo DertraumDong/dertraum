@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.d.main.dao.ContractDAO">
+
+    <resultMap id="ContractDTOResultMap" type="com.d.main.model.ContractDTO">
+                <id column="id" property="id" jdbcType="INTEGER" />
+                <result column="name" property="name" jdbcType="VARCHAR"/>
+                <result column="code" property="code" jdbcType="VARCHAR"/>
+                <result column="open" property="open" jdbcType="DOUBLE"/>
+                <result column="top" property="top" jdbcType="DOUBLE"/>
+                <result column="down" property="down" jdbcType="DOUBLE"/>
+                <result column="closing" property="closing" jdbcType="DOUBLE"/>
+                <result column="now" property="now" jdbcType="DOUBLE"/>
+                <result column="onesell" property="onesell" jdbcType="DOUBLE"/>
+                <result column="onebuy" property="onebuy" jdbcType="DOUBLE"/>
+                <result column="settlement" property="settlement" jdbcType="DOUBLE"/>
+                <result column="yessettlement" property="yessettlement" jdbcType="DOUBLE"/>
+                <result column="onebuynum" property="onebuynum" jdbcType="DOUBLE"/>
+                <result column="onesellnum" property="onesellnum" jdbcType="DOUBLE"/>
+                <result column="holdings" property="holdings" jdbcType="BIGINT"/>
+                <result column="volume" property="volume" jdbcType="BIGINT"/>
+                <result column="exchange" property="exchange" jdbcType="VARCHAR"/>
+                <result column="varieties" property="varieties" jdbcType="VARCHAR"/>
+                <result column="date" property="date" jdbcType="DATE"/>
+                <result column="unknownparameters1" property="unknownparameters1" jdbcType="VARCHAR"/>
+                <result column="unknownparameters2" property="unknownparameters2" jdbcType="VARCHAR"/>
+                <result column="unknownparameters3" property="unknownparameters3" jdbcType="VARCHAR"/>
+                <result column="unknownparameters4" property="unknownparameters4" jdbcType="VARCHAR"/>
+                <result column="unknownparameters5" property="unknownparameters5" jdbcType="VARCHAR"/>
+                <result column="unknownparameters6" property="unknownparameters6" jdbcType="VARCHAR"/>
+                <result column="unknownparameters7" property="unknownparameters7" jdbcType="VARCHAR"/>
+                <result column="historytop" property="historytop" jdbcType="VARCHAR"/>
+                <result column="historydown" property="historydown" jdbcType="VARCHAR"/>
+                <result column="avg" property="avg" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <resultMap id="findData" type="com.d.main.model.ContractResultDTO" >
+        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="open" property="open" jdbcType="DOUBLE"/>
+        <result column="now" property="now" jdbcType="DOUBLE"/>
+        <result column="down" property="down" jdbcType="DOUBLE"/>
+        <result column="top" property="top" jdbcType="DOUBLE"/>
+        <result column="volume" property="volume" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="findDtoSql">
+        select * from  contract
+    </sql>
+
+    <sql id="parameterSql">
+        <if test="id != null">
+            AND id =  #{id}
+        </if>
+        <if test="name != null">
+            AND name =  #{name}
+        </if>
+        <if test="code != null">
+            AND code =  #{code}
+        </if>
+        <if test="open != null">
+            AND open =  #{open}
+        </if>
+        <if test="top != null">
+            AND top =  #{top}
+        </if>
+        <if test="down != null">
+            AND down =  #{down}
+        </if>
+        <if test="closing != null">
+            AND closing =  #{closing}
+        </if>
+        <if test="now != null">
+            AND now =  #{now}
+        </if>
+        <if test="onesell != null">
+            AND onesell =  #{onesell}
+        </if>
+        <if test="onebuy != null">
+            AND onebuy =  #{onebuy}
+        </if>
+        <if test="settlement != null">
+            AND settlement =  #{settlement}
+        </if>
+        <if test="yessettlement != null">
+            AND yessettlement =  #{yessettlement}
+        </if>
+        <if test="onebuynum != null">
+            AND onebuynum =  #{onebuynum}
+        </if>
+        <if test="onesellnum != null">
+            AND onesellnum =  #{onesellnum}
+        </if>
+        <if test="holdings != null">
+            AND holdings =  #{holdings}
+        </if>
+        <if test="volume != null">
+            AND volume =  #{volume}
+        </if>
+        <if test="exchange != null">
+            AND exchange =  #{exchange}
+        </if>
+        <if test="varieties != null">
+            AND varieties =  #{varieties}
+        </if>
+        <if test="date != null">
+            AND date =  #{date}
+        </if>
+        <if test="unknownparameters1 != null">
+            AND unknownparameters1 =  #{unknownparameters1}
+        </if>
+        <if test="unknownparameters2 != null">
+            AND unknownparameters2 =  #{unknownparameters2}
+        </if>
+        <if test="unknownparameters3 != null">
+            AND unknownparameters3 =  #{unknownparameters3}
+        </if>
+        <if test="unknownparameters4 != null">
+            AND unknownparameters4 =  #{unknownparameters4}
+        </if>
+        <if test="unknownparameters5 != null">
+            AND unknownparameters5 =  #{unknownparameters5}
+        </if>
+        <if test="unknownparameters6 != null">
+            AND unknownparameters6 =  #{unknownparameters6}
+        </if>
+        <if test="unknownparameters7 != null">
+            AND unknownparameters7 =  #{unknownparameters7}
+        </if>
+        <if test="historytop != null">
+            AND historytop =  #{historytop}
+        </if>
+        <if test="historydown != null">
+            AND historydown =  #{historydown}
+        </if>
+        <if test="avg != null">
+            AND avg =  #{avg}
+        </if>
+    </sql>
+
+    <sql id="sortSql">
+        <if test="sortName != null">
+            ORDER BY #{sortName}  #{sortRule}
+        </if>
+                <if test="sortName == null">
+                    ORDER BY id ASC
+                </if>
+    </sql>
+
+    <select id="findDTOById" parameterType="String" resultMap="ContractDTOResultMap">
+        <include refid="findDtoSql"></include>
+        <where>
+            id =  #{id}
+        </where>
+    </select>
+
+    <select id="selectAll" parameterType="com.d.main.model.Contract" resultMap="ContractDTOResultMap" >
+        <include refid="findDtoSql"></include>
+        <where>
+            <include refid="parameterSql"></include>
+        </where>
+        <include refid="sortSql"></include>
+    </select>
+
+    <insert id="insetContractByValue">
+       INSERT IGNORE INTO contract (
+            name,
+            code,
+            open,
+            top,
+            down,
+            closing,
+            now,
+            onesell,
+            onebuy,
+            settlement,
+            yessettlement,
+            onebuynum,
+            onesellnum,
+            holdings,
+            volume,
+            exchange,
+            varieties,
+            date,
+            historytop,
+            historydown,
+            avg,
+            flag,
+            creatime
+        )
+        VALUES
+        <foreach collection="list" item="co" open="" separator="," close="">
+            (
+            #{co.name},
+            #{co.code},
+            #{co.open},
+            #{co.top},
+            #{co.down},
+            #{co.closing},
+            #{co.now},
+            #{co.onesell},
+            #{co.onebuy},
+            #{co.settlement},
+            #{co.yessettlement},
+            #{co.onebuynum},
+            #{co.onesellnum},
+            #{co.holdings},
+            #{co.volume},
+            #{co.exchange},
+            #{co.varieties},
+            #{co.date},
+            #{co.historytop},
+            #{co.historydown},
+            #{co.avg},
+            #{co.flag},
+            now()
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insetContractByValueB" parameterType="com.d.main.model.Contract">
+        INSERT INTO contract (
+            name,
+            code,
+            open,
+            top,
+            down,
+            closing,
+            now,
+            onesell,
+            onebuy,
+            settlement,
+            yessettlement,
+            onebuynum,
+            onesellnum,
+            holdings,
+            volume,
+            exchange,
+            varieties,
+            date,
+            historytop,
+            historydown,
+            avg,
+            flag,
+            creatime
+        )
+        VALUES
+        (
+            #{name},
+            #{code},
+            #{open},
+            #{top},
+            #{down},
+            #{closing},
+            #{now},
+            #{onesell},
+            #{onebuy},
+            #{settlement},
+            #{yessettlement},
+            #{onebuynum},
+            #{onesellnum},
+            #{holdings},
+            #{volume},
+            #{exchange},
+            #{varieties},
+            #{date},
+            #{historytop},
+            #{historydown},
+            #{avg},
+            #{flag},
+            now()
+            )
+            ON DUPLICATE KEY UPDATE
+            name = #{name},
+            code = #{code},
+            open = #{open},
+            top = #{top},
+            down = #{down},
+            closing = #{closing},
+            now = #{now},
+            onesell = #{onesell},
+            onebuy = #{onebuy},
+            settlement = #{settlement},
+            yessettlement = #{yessettlement},
+            onebuynum = #{onebuynum},
+            onesellnum = #{onesellnum},
+            holdings = #{holdings},
+            volume = #{volume},
+            exchange = #{exchange},
+            varieties = #{varieties},
+            date = #{date},
+            historytop = #{historytop},
+            historydown = #{historydown},
+            avg = #{avg},
+            flag = #{flag}
+    </insert>
+
+    <select id="selectByName" parameterType="com.d.main.model.Contract" resultMap="findData">
+        select name,date,open,now,top,down,volume from contract where name = #{name} order by date DESC
+    </select>
+
+    <select id="selectTimeByName" parameterType="String" resultMap="findData">
+        SELECT DISTINCT c.date FROM `contract` as c LEFT JOIN info as i ON c.`name` = i.`name` where i.var = #{_parameter} ORDER BY c.date DESC
+    </select>
+
+</mapper>
