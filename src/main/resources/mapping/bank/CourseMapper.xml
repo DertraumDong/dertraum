@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.d.main.bank.dao.CourseDAO">
+
+
+    <resultMap id="CourseDTOResultMap" type="com.d.main.bank.model.CourseDTO">
+                <id column="kid" property="kid" jdbcType="INTEGER" />
+                <result column="name" property="name" jdbcType="VARCHAR"/>
+                <result column="code" property="code" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="findDtoSql">
+        select <include refid="resultSql"></include> from  course
+    </sql>
+
+    <sql id="resultSql">
+                kid  ,
+                name  ,
+                code 
+    </sql>
+
+    <sql id="parameterSql">
+                <if test="kid != null">
+                    AND kid =  #{kid}
+                </if>
+                <if test="name != null">
+                    AND name =  #{name}
+                </if>
+                <if test="code != null">
+                    AND code =  #{code}
+                </if>
+    </sql>
+
+    <sql id="sortSql">
+        <if test="sortName != null">
+            ORDER BY #{sortName}  #{sortRule}
+        </if>
+                <if test="sortName == null">
+                    ORDER BY kid ASC
+                </if>
+    </sql>
+
+    <select id="findDTOById" parameterType="String" resultMap="CourseDTOResultMap">
+        <include refid="findDtoSql"></include>
+        <where>
+            kid = #{_parameter}
+        </where>
+    </select>
+
+    <select id="selectAll" parameterType="com.d.main.bank.model.Course" resultMap="CourseDTOResultMap" >
+        <include refid="findDtoSql"></include>
+        <where>
+            <include refid="parameterSql"></include>
+        </where>
+        <include refid="sortSql"></include>
+    </select>
+
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.d.main.relation.dao.HumanRelationDao">
+
+
+    <resultMap id="HumanRelationResultMap" type="com.d.main.relation.model.HumanRelation">
+        <id column="human_id" property="humanId" jdbcType="VARCHAR" />
+        <result column="human_name" property="humanName" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="TIMESTAMP"/>
+        <result column="old_birthday" property="oldBirthday" jdbcType="TIMESTAMP"/>
+        <result column="creation_by" property="creationBy" jdbcType="VARCHAR"/>
+        <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="version" property="version" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="findDtoSql">
+        select <include refid="resultSql"></include> from  human_info
+    </sql>
+
+    <sql id="resultSql">
+        human_id  ,
+        human_name  ,
+        birthday  ,
+        old_birthday  ,
+        creation_by  ,
+        creation_date  ,
+        modify_by  ,
+        modify_date  ,
+        version
+    </sql>
+
+    <sql id="parameterSql">
+        <if test="id != null">
+            AND human_id =  #{id}
+        </if>
+        <if test="kid != null">
+            AND human_name =  #{kid}
+        </if>
+        <if test="title != null">
+            AND birthday =  #{title}
+        </if>
+        <if test="content != null">
+            AND old_birthday =  #{content}
+        </if>
+        <if test="createTime != null">
+            AND creation_by =  #{createTime}
+        </if>
+        <if test="creator != null">
+            AND creation_date =  #{creator}
+        </if>
+        <if test="modifyTime != null">
+            AND modify_by =  #{modifyTime}
+        </if>
+        <if test="modifer != null">
+            AND modify_date =  #{modifer}
+        </if>
+        <if test="version != null">
+            AND version =  #{version}
+        </if>
+    </sql>
+
+    <sql id="sortSql">
+        <if test="sortName != null">
+            ORDER BY #{sortName}  #{sortRule}
+        </if>
+                <if test="sortName == null">
+                    ORDER BY id ASC
+                </if>
+    </sql>
+
+    <select id="findDTOById" parameterType="String" resultMap="HumanRelationResultMap">
+        <include refid="findDtoSql"></include>
+        <where>
+            id = #{humanId}
+        </where>
+    </select>
+
+    <insert id="addBean" parameterType="com.d.main.relation.model.HumanRelation">
+        insert into
+        human_info
+        values
+        (
+        #{humanId},
+        #{humanName},
+        #{birthday},
+        #{oldBirthday},
+        #{creationBy},
+        #{creationDate},
+        #{modifyBy},
+        #{modifyDate},
+        #{version}
+        )
+    </insert>
+</mapper>

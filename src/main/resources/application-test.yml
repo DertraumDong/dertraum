@@ -1,7 +1,7 @@
 spring:
   datasource:
-    username: traum
-    password: 123456
+    username: root
+    password: 621248
     url: jdbc:mysql://127.0.0.1:3306/traum?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
@@ -22,7 +22,7 @@ server:
     context-path: /dt
 
 mybatis:
-  mapper-locations: classpath:mapping/*Mapper.xml
-  type-aliases-package: com.d.main.model
+  mapper-locations: classpath:mapping/*/*Mapper.xml
+  type-aliases-package: com.d.main.*.model
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
