@@ -1,5 +1,6 @@
 package com.d.main.relation.controller;
 
+import com.d.main.common.filter.SecurityUtil;
 import com.d.main.relation.model.HumanInfo;
 import com.d.main.relation.service.HumanInfoService;
 import com.dtr.base.dto.BaseExceptionState;
@@ -31,8 +32,9 @@ public class HumanInfoController {
     public ResponseVO addNewHumanRelation(@RequestBody HumanInfo humanInfo){
         ResponseVO responseVO = new ResponseVO();
         try {
-            humanInfo.setCreationBy("ADMIN");
-            humanInfo.setModifyBy("ADMIN");
+            String userId = SecurityUtil.getUserId();
+            humanInfo.setCreationBy(userId);
+            humanInfo.setModifyBy(userId);
             return humanInfoService.addNewHumanRelation(humanInfo);
         } catch (Exception e){
             e.printStackTrace();
@@ -46,8 +48,10 @@ public class HumanInfoController {
     public ResponseVO updateHumanRelation(@RequestBody HumanInfo humanInfo){
         ResponseVO responseVO = new ResponseVO();
         try {
-            humanInfo.setModifyBy("ADMIN");
-            return humanInfoService.updateHumanRelation(humanInfo);
+            String userId = SecurityUtil.getUserId();
+            humanInfo.setModifyBy(userId);
+            responseVO = humanInfoService.updateHumanRelation(humanInfo);
+            return responseVO;
         } catch (Exception e){
             e.printStackTrace();
             responseVO.setCode(BaseExceptionState.COMMON_ERROR.getCode());

@@ -1,8 +1,10 @@
 package com.d.main.relation.service.impl;
 
 import com.d.main.relation.dao.HumanInfoDao;
+import com.d.main.relation.dao.HumanRelationDao;
 import com.d.main.relation.dao.HumanRelationTypeDao;
 import com.d.main.relation.model.HumanInfo;
+import com.d.main.relation.model.HumanRelation;
 import com.d.main.relation.model.HumanRelationType;
 import com.d.main.relation.service.HumanInfoService;
 import com.d.main.relation.service.HumanRelationTypeService;
@@ -34,6 +36,8 @@ public class HumanInfoServiceImpl implements HumanInfoService {
     @Autowired
     private HumanInfoDao humanInfoDao;
     @Autowired
+    private HumanRelationDao humanRelationDao;
+    @Autowired
     private HumanRelationTypeService humanRelationTypeService;
 
     @Override
@@ -51,6 +55,11 @@ public class HumanInfoServiceImpl implements HumanInfoService {
         humanInfo.setVersion(0);
         int result = humanInfoDao.addHumanInfo(humanInfo);
         if(result>0){
+            HumanRelation humanRelation = new HumanRelation();
+            humanRelation.setUserId(humanInfo.getCreationBy());
+            humanRelation.setHumanId(humanId);
+            humanRelation.setCreationDate(new Date());
+            humanRelationDao.addHumanRelation(humanRelation);
             humanRelationTypeService.addHumanRelationType(humanInfo);
         }
         responseVO.setData(humanId);
@@ -79,5 +88,4 @@ public class HumanInfoServiceImpl implements HumanInfoService {
         responseVO.setData(result);
         return responseVO;
     }
-
 }

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.d.main.relation.dao.HumanRelationDao">
+
+    <resultMap id="HumanRelationResultMap" type="com.d.main.relation.model.HumanRelation">
+        <result column="human_id" property="humanId" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="findDtoSql">
+        select <include refid="resultSql"></include> from  human_relation
+    </sql>
+
+    <sql id="resultSql">
+        user_id,
+        human_id,
+        creation_date
+    </sql>
+
+    <sql id="parameterSql">
+        <if test="userId != null">
+            AND user_id =  #{userId}
+        </if>
+        <if test="humanId != null">
+            AND human_id =  #{humanId}
+        </if>
+        <if test="creationDate != null">
+            AND creation_date =  #{creationDate}
+        </if>
+    </sql>
+
+    <sql id="sortSql">
+        <if test="sortName != null">
+            ORDER BY #{sortName}  #{sortRule}
+        </if>
+        <if test="sortName == null">
+            ORDER BY id ASC
+        </if>
+    </sql>
+
+    <insert id="addHumanRelation" parameterType="com.d.main.relation.model.HumanRelation">
+        insert into
+        human_relation
+        values
+        (
+        #{userId},
+        #{humanId},
+        #{creationDate}
+        )
+    </insert>
+
+    <delete id="deleteByUserId">
+        delete from
+        human_relation
+        where
+        user_id = #{userId}
+    </delete>
+
+    <resultMap id="HumanInfoRelationMap" type="com.d.main.relation.model.dto.HumanInfoDto">
+        <result column="human_id" property="humanId" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP"/>
+        <result column="human_name" property="humanName" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="TIMESTAMP"/>
+        <result column="old_birthday" property="oldBirthday" jdbcType="TIMESTAMP"/>
+        <collection property="types" ofType="java.lang.String">
+            <result column="tag_type" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryHumanRelationPage" resultMap="HumanInfoRelationMap">
+        select
+            relation.user_id,
+            info.human_id  ,
+            info.human_name  ,
+            info.birthday  ,
+            info.old_birthday  ,
+            relation.creation_date,
+            type.tag_type
+        from
+            human_relation relation
+            left join human_info info on relation.human_id = info.human_id
+            left join human_relation_type type on relation.human_id = type.human_id
+        where
+            user_id = #{userId}
+    </select>
+</mapper>
