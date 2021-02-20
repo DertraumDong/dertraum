@@ -21,8 +21,13 @@ server:
   servlet:
     context-path: /dt
 
+
 mybatis:
   mapper-locations: classpath:mapping/*/*Mapper.xml
   type-aliases-package: com.d.main.*.model
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+system:
+  isDebug: true
+  userId: ADMIN
