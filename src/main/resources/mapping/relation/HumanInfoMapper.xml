@@ -69,10 +69,10 @@
         </if>
     </sql>
 
-    <select id="findDTOByName" parameterType="String" resultMap="HumanInfoResultMap">
+    <select id="findDTOByHumanId" parameterType="String" resultMap="HumanInfoResultMap">
         <include refid="findDtoSql"></include>
         <where>
-            human_name = #{humanName}
+            human_id = #{humanId}
         </where>
     </select>
 
@@ -92,4 +92,29 @@
         #{version}
         )
     </insert>
+
+    <update id="updateByHumanId">
+        update
+            human_info
+        <set>
+            <if test="humanName != null and humanName != ''">
+                human_name = #{humanName},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="oldBirthday != null">
+                old_birthday = #{oldBirthday},
+            </if>
+            <if test="modifyBy != null and modifyBy != ''">
+                modify_by = #{modifyBy},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate},
+            </if>
+            version = version + 1
+        </set>
+        where
+            human_id = #{humanId}
+    </update>
 </mapper>

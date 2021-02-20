@@ -5,7 +5,10 @@ import com.d.main.relation.dao.HumanRelationTypeDao;
 import com.d.main.relation.model.HumanInfo;
 import com.d.main.relation.model.HumanRelationType;
 import com.d.main.relation.service.HumanInfoService;
+import com.d.main.relation.service.HumanRelationTypeService;
+import com.dtr.base.dto.BaseExceptionState;
 import com.dtr.util.SnowFlake;
+import com.dtr.web.dto.ResponseVO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,45 +29,55 @@ import java.util.List;
 @Service
 public class HumanInfoServiceImpl implements HumanInfoService {
     /* 日志记录器 */
-    private final static Logger LOGGER = LoggerFactory.getLogger(HumanInfoServiceImpl .class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(HumanInfoServiceImpl.class);
+
     @Autowired
     private HumanInfoDao humanInfoDao;
-
     @Autowired
-    private HumanRelationTypeDao humanRelationTypeDao;
+    private HumanRelationTypeService humanRelationTypeService;
 
     @Override
-    public int addNewHumanRelation(HumanInfo humanInfo) {
+    public ResponseVO addNewHumanRelation(HumanInfo humanInfo) {
         return addNewHuman(humanInfo);
     }
 
-    private int addNewHuman(HumanInfo humanInfo){
+    private ResponseVO addNewHuman(HumanInfo humanInfo){
+        ResponseVO responseVO = new ResponseVO();
         SnowFlake snowFlake = SnowFlake.getSingleobject();
         String humanId = String.valueOf(snowFlake.nextId());
         humanInfo.setHumanId(humanId);
-        humanInfo.setCreationBy("ADMIN");
         humanInfo.setCreationDate(new Date());
-        humanInfo.setModifyBy("ADMIN");
         humanInfo.setModifyDate(new Date());
         humanInfo.setVersion(0);
         int result = humanInfoDao.addHumanInfo(humanInfo);
         if(result>0){
-            List<String> relationTypes = humanInfo.getRelationTypes();
-            HashMap<String,String> map = HumanRelationType.getTypeMap();
-            List<HumanRelationType> humanRelationTypeList = new ArrayList<>(relationTypes.size());
-            for (String type : relationTypes) {
-                if(map.containsKey(type)){
-                    HumanRelationType humanRelationType = new HumanRelationType();
-                    humanRelationType.setHumanId(humanId);
-                    humanRelationType.setTagType(type);
-                    //humanRelationTypeDao.addBean(humanRelationType);
-                    humanRelationTypeList.add(humanRelationType);
-                } else {
-                    LOGGER.warn(" type is exists : type = {}",type);
-                }
-            }
-            humanRelationTypeDao.batchAdd(humanRelationTypeList);
+            humanRelationTypeService.addHumanRelationType(humanInfo);
         }
-        return result;
+        responseVO.setData(humanId);
+        return responseVO;
     }
+
+    @Override
+    public ResponseVO updateHumanRelation(HumanInfo humanInfo) {
+        ResponseVO responseVO = new ResponseVO();
+        String humanId = humanInfo.getHumanId();
+        if(StringUtils.isBlank(humanId)){
+            responseVO.setCode(BaseExceptionState.COMMON_ERROR.getCode());
+            responseVO.setMsg("id is empty");
+            return responseVO;
+        }
+        HumanInfo resultHumanInfo = humanInfoDao.findDTOByHumanId(humanId);
+        if(resultHumanInfo == null){
+            responseVO.setCode(BaseExceptionState.COMMON_ERROR.getCode());
+            responseVO.setMsg("id is not exists");
+            return responseVO;
+        }
+        int result = humanInfoDao.updateByHumanId(humanInfo);
+        if(result>0){
+            humanRelationTypeService.addHumanRelationType(humanInfo);
+        }
+        responseVO.setData(result);
+        return responseVO;
+    }
+
 }

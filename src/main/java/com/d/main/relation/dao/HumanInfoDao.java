@@ -14,7 +14,9 @@ import java.util.List;
  */
 @Component
 public interface HumanInfoDao {
-    List<HumanInfo> findDTOByName(@Param("humanName") String humanName);
+    HumanInfo findDTOByHumanId(@Param("humanId") String humanId);
 
     int addHumanInfo(HumanInfo humanInfo);
+
+    int updateByHumanId(HumanInfo humanInfo);
 }

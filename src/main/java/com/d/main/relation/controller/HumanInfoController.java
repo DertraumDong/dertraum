@@ -31,8 +31,9 @@ public class HumanInfoController {
     public ResponseVO addNewHumanRelation(@RequestBody HumanInfo humanInfo){
         ResponseVO responseVO = new ResponseVO();
         try {
-            responseVO.setData(humanInfoService.addNewHumanRelation(humanInfo));
-            return responseVO;
+            humanInfo.setCreationBy("ADMIN");
+            humanInfo.setModifyBy("ADMIN");
+            return humanInfoService.addNewHumanRelation(humanInfo);
         } catch (Exception e){
             e.printStackTrace();
             responseVO.setCode(BaseExceptionState.COMMON_ERROR.getCode());
@@ -41,4 +42,17 @@ public class HumanInfoController {
         }
     }
 
+    @PostMapping("/updateHumanRelation")
+    public ResponseVO updateHumanRelation(@RequestBody HumanInfo humanInfo){
+        ResponseVO responseVO = new ResponseVO();
+        try {
+            humanInfo.setModifyBy("ADMIN");
+            return humanInfoService.updateHumanRelation(humanInfo);
+        } catch (Exception e){
+            e.printStackTrace();
+            responseVO.setCode(BaseExceptionState.COMMON_ERROR.getCode());
+            responseVO.setMsg(BaseExceptionState.COMMON_ERROR.getMsg());
+            return responseVO;
+        }
+    }
 }
