@@ -1,11 +1,11 @@
-DROP table if exsits human_relation;
+DROP table if exists human_relation;
 CREATE TABLE if not exists human_relation (
 	user_id varchar(32) NOT NULL COMMENT '用户id',
 	human_id varchar(32) NOT NULL COMMENT '人员id',
 	creation_date date NOT NULL COMMENT '关系创建时间'
 ) COMMENT='人员关系表';
 
-DROP table if exsits human_info;
+DROP table if exists human_info;
 CREATE TABLE if not exists human_info (
 	human_id varchar(32) NOT NULL COMMENT '主键id',
 	human_name varchar(50) NOT NULL COMMENT '人员姓名',
@@ -19,7 +19,7 @@ CREATE TABLE if not exists human_info (
 	PRIMARY KEY (human_id)
 ) COMMENT='人员表';
 
-DROP table if exsits human_relation_type;
+DROP table if exists human_relation_type;
 CREATE TABLE if not exists human_relation_type (
 	human_id varchar(32) NOT NULL COMMENT '主键id',
 	tag_type tinyint NOT NULL COMMENT '关系类型'

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.d.main.relation.dao.HumanRelationTypeDao">
+
+
+    <resultMap id="HumanRelationTypeResultMap" type="com.d.main.relation.model.HumanRelationType">
+        <id column="human_id" property="humanId" jdbcType="VARCHAR" />
+        <result column="tag_type" property="tagType" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="findDtoSql">
+        select <include refid="resultSql"></include> from  human_relation_type
+    </sql>
+
+    <sql id="resultSql">
+        human_id  ,
+        tag_type
+    </sql>
+
+    <sql id="parameterSql">
+        <if test="humanId != null">
+            AND human_id =  #{humanId}
+        </if>
+        <if test="tagType != null">
+            AND tag_type =  #{tagType}
+        </if>
+    </sql>
+
+    <sql id="sortSql">
+        <if test="sortName != null">
+            ORDER BY #{sortName}  #{sortRule}
+        </if>
+        <if test="sortName == null">
+            ORDER BY id ASC
+        </if>
+    </sql>
+
+    <insert id="addBean" parameterType="com.d.main.relation.model.HumanRelationType">
+        insert into
+        human_relation_type
+        values
+        (
+        #{humanId},
+        #{tagType}
+        )
+    </insert>
+
+    <insert id="batchAdd">
+        insert into
+        human_relation_type
+        values
+        <foreach collection="list" item="type" separator=",">
+            (
+            #{type.humanId},
+            #{type.tagType}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByHumanId">
+        delete from human_relation_type where human_id = #{humanId}
+    </delete>
+</mapper>

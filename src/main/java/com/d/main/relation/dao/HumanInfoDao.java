@@ -1,6 +1,6 @@
 package com.d.main.relation.dao;
 
-import com.d.main.relation.model.HumanRelation;
+import com.d.main.relation.model.HumanInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +13,8 @@ import java.util.List;
  * @since 1.0.0
  */
 @Component
-public interface HumanRelationDao {
-    List<HumanRelation> findDTOById(@Param("humanId") String humanId);
+public interface HumanInfoDao {
+    List<HumanInfo> findDTOByName(@Param("humanName") String humanName);
 
-    int addBean(HumanRelation humanRelation);
+    int addHumanInfo(HumanInfo humanInfo);
 }

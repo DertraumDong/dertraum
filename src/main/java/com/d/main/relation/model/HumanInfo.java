@@ -2,6 +2,7 @@ package com.d.main.relation.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 2021/2/19
@@ -9,7 +10,7 @@ import java.util.Date;
  * @author  DerTraum
  * @since 1.0.0
  */
-public class HumanRelation implements Serializable {
+public class HumanInfo implements Serializable {
 
     private String humanId  ;
     private String humanName  ;
@@ -20,6 +21,8 @@ public class HumanRelation implements Serializable {
     private String modifyBy  ;
     private Date modifyDate  ;
     private int version;
+    private List<String> relationTypes;
+
 
     public String getHumanId() {
         return humanId;
@@ -91,5 +94,13 @@ public class HumanRelation implements Serializable {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public List<String> getRelationTypes() {
+        return relationTypes;
+    }
+
+    public void setRelationTypes(List<String> relationTypes) {
+        this.relationTypes = relationTypes;
     }
 }
