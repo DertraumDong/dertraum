@@ -84,5 +84,7 @@
             left join human_relation_type type on relation.human_id = type.human_id
         where
             user_id = #{userId}
+        order by
+            relation.creation_date desc
     </select>
 </mapper>
