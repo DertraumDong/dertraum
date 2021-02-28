@@ -3,6 +3,7 @@ package com.d.main.relation.controller;
 import com.d.main.common.filter.SecurityUtil;
 import com.d.main.relation.model.HumanInfo;
 import com.d.main.relation.model.HumanRelation;
+import com.d.main.relation.model.query.HumanRelationQuery;
 import com.d.main.relation.service.HumanRelationService;
 import com.dtr.base.dto.BaseExceptionState;
 import com.dtr.web.dto.ResponseVO;
@@ -30,12 +31,12 @@ public class HumanRelationController {
     private HumanRelationService humanRelationService;
 
     @PostMapping("/queryHumanRelationPage")
-    public ResponseVO queryHumanRelationPage(@RequestBody HumanRelation humanRelation){
+    public ResponseVO queryHumanRelationPage(@RequestBody HumanRelationQuery humanRelationQuery){
         ResponseVO responseVO = new ResponseVO();
         try {
             String userId = SecurityUtil.getUserId();
-            humanRelation.setUserId(userId);
-            responseVO = humanRelationService.queryHumanRelationPage(humanRelation);
+            humanRelationQuery.setUserId(userId);
+            responseVO = humanRelationService.queryHumanRelationPage(humanRelationQuery);
             return responseVO;
         } catch (Exception e){
             e.printStackTrace();

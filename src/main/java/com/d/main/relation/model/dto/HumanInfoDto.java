@@ -1,5 +1,6 @@
 package com.d.main.relation.model.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * @author DerTraum
  * @since 1.0.0
  */
-public class HumanInfoDto {
+public class HumanInfoDto implements Serializable {
     private String userId;
     private String humanId;
     private String humanName;

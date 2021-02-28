@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.d.main.bank.dao.ProjectDAO">
+
+    <resultMap id="HumanInfoResultMap" type="com.d.main.bank.model.Project">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="link" property="link" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="introduce" property="introduce" jdbcType="VARCHAR"/>
+        <result column="creation_by" property="creationBy" jdbcType="VARCHAR"/>
+        <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="version" property="version" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="findDtoSql">
+        select <include refid="resultSql"></include> from  project
+    </sql>
+
+    <sql id="resultSql">
+        id  ,
+        name  ,
+        link  ,
+        author  ,
+        introduce  ,
+        creation_by  ,
+        creation_date  ,
+        modify_by  ,
+        modify_date  ,
+        version
+    </sql>
+
+    <sql id="parameterSql">
+        <if test="id != null and id != ''">
+            AND id =  #{id}
+        </if>
+        <if test="name != null and name != ''">
+            AND name =  #{name}
+        </if>
+        <if test="link != null and link != ''">
+            AND link =  #{link}
+        </if>
+        <if test="author != null and author != ''">
+            AND author =  #{author}
+        </if>
+        <if test="introduce != null and introduce != ''">
+            AND introduce =  #{introduce}
+        </if>
+        <if test="creationBy != null and creationBy != ''">
+            AND creation_by =  #{creationBy}
+        </if>
+        <if test="creationDate != null">
+            AND creation_date =  #{creationDate}
+        </if>
+        <if test="modifyBy != null and modifyBy != ''">
+            AND modify_by =  #{modifyBy}
+        </if>
+        <if test="modifyDate != null">
+            AND modify_date =  #{modifyDate}
+        </if>
+    </sql>
+
+    <sql id="sortSql">
+        <if test="sortName != null">
+            ORDER BY #{sortName}  #{sortRule}
+        </if>
+        <if test="sortName == null">
+            ORDER BY creation_date DESC
+        </if>
+    </sql>
+
+    <sql id="pageSql">
+        limit #{pageNo},#{pageSize}
+    </sql>
+
+    <select id="queryProjectPage" parameterType="String" resultMap="HumanInfoResultMap">
+        <include refid="findDtoSql"></include>
+        <where>
+            <include refid="parameterSql"></include>
+        </where>
+        <include refid="sortSql"></include>
+        <include refid="pageSql"></include>
+    </select>
+
+    <insert id="addProject" parameterType="com.d.main.relation.model.HumanInfo">
+        insert into
+        project
+        (
+        id  ,
+        name  ,
+        link  ,
+        author  ,
+        introduce  ,
+        creation_by  ,
+        creation_date  ,
+        modify_by  ,
+        modify_date  ,
+        version
+        )
+        values
+        (
+        #{id},
+        #{name},
+        #{link},
+        #{author},
+        #{introduce},
+        #{creationBy},
+        #{creationDate},
+        #{modifyBy},
+        #{modifyDate},
+        #{version}
+        )
+    </insert>
+</mapper>

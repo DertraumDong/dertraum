@@ -2,6 +2,7 @@ package com.d.main.relation.service;
 
 import com.d.main.relation.model.HumanInfo;
 import com.d.main.relation.model.HumanRelation;
+import com.d.main.relation.model.query.HumanRelationQuery;
 import com.dtr.web.dto.ResponseVO;
 
 /**
@@ -12,5 +13,5 @@ import com.dtr.web.dto.ResponseVO;
  */
 public interface HumanRelationService {
 
-    ResponseVO queryHumanRelationPage(HumanRelation humanRelation);
+    ResponseVO queryHumanRelationPage(HumanRelationQuery humanRelationQuery);
 }
