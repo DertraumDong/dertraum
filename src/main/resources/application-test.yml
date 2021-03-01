@@ -1,6 +1,6 @@
 spring:
   datasource:
-    username: root
+    username: traum
     password: 621248
     url: jdbc:mysql://127.0.0.1:3306/traum?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -22,7 +22,7 @@ server:
     context-path: /dt
 
 
-mybatis:
+mybatis-plus:
   mapper-locations: classpath:mapping/*/*Mapper.xml
   type-aliases-package: com.d.main.*.model
   configuration:
