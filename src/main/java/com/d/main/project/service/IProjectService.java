@@ -1,7 +1,7 @@
-package com.d.main.bank.service;
+package com.d.main.project.service;
 
-import com.d.main.bank.model.Project;
-import com.d.main.bank.model.query.ProjectQuery;
+import com.d.main.project.model.Project;
+import com.d.main.project.model.query.ProjectQuery;
 import com.dtr.web.dto.ResponseVO;
 
 /**

@@ -1,7 +1,7 @@
-package com.d.main.bank.dao;
+package com.d.main.project.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.d.main.bank.model.Project;
+import com.d.main.project.model.Project;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

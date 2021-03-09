@@ -1,5 +1,6 @@
-package com.d.main.bank.model;
+package com.d.main.project.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.util.Date;
@@ -31,4 +32,6 @@ public class Project{
 
     private int version;
 
+    @TableField(exist = false)
+    private int view;
 }

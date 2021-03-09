@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.d.main.bank.dao.ProjectDAO">
+<mapper namespace="com.d.main.project.dao.ProjectDAO">
 
-    <resultMap id="HumanInfoResultMap" type="com.d.main.bank.model.Project">
+    <resultMap id="HumanInfoResultMap" type="com.d.main.project.model.Project">
         <id column="id" property="id" jdbcType="VARCHAR" />
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="link" property="link" jdbcType="VARCHAR"/>

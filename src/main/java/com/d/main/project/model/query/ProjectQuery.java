@@ -1,4 +1,4 @@
-package com.d.main.bank.model.query;
+package com.d.main.project.model.query;
 
 import com.d.main.bank.model.BaseModel;
 import lombok.Data;

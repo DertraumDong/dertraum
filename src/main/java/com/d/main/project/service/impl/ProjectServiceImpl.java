@@ -1,12 +1,13 @@
-package com.d.main.bank.service.impl;
+package com.d.main.project.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.d.main.bank.dao.ProjectDAO;
-import com.d.main.bank.model.Project;
-import com.d.main.bank.model.query.ProjectQuery;
-import com.d.main.bank.service.IProjectService;
+import com.d.main.project.dao.ProjectDAO;
+import com.d.main.project.model.Project;
+import com.d.main.project.model.query.ProjectQuery;
+import com.d.main.project.service.IProjectService;
+import com.d.main.project.service.ProjectViewService;
 import com.dtr.util.UUIDUtil;
 import com.dtr.web.dto.ResponseVO;
 import org.slf4j.Logger;
@@ -29,6 +30,8 @@ public class ProjectServiceImpl implements IProjectService {
 
     @Autowired
     private ProjectDAO projectDAO;
+    @Autowired
+    private ProjectViewService projectViewService;
 
     @Override
     public ResponseVO queryProjectPage(ProjectQuery projectQuery) {
@@ -45,11 +48,13 @@ public class ProjectServiceImpl implements IProjectService {
     @Override
     public ResponseVO addProject(Project project) {
         ResponseVO responseVO = new ResponseVO();
-        project.setId(UUIDUtil.getUUID());
+        String id = UUIDUtil.getUUID();
+        project.setId(id);
         project.setCreationDate(new Date());
         project.setModifyDate(new Date());
         project.setVersion(1);
         responseVO.setData(projectDAO.insert(project));
+        projectViewService.addProjectView(id);
         return responseVO;
     }
 
@@ -57,6 +62,7 @@ public class ProjectServiceImpl implements IProjectService {
     public ResponseVO deteleProjectById(String id) {
         ResponseVO responseVO = new ResponseVO();
         responseVO.setData(projectDAO.deleteById(id));
+        projectViewService.deleteProjectView(id);
         return responseVO;
     }
 }

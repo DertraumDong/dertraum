@@ -1,32 +1,22 @@
-package com.d.main.bank.controller;
+package com.d.main.project.controller;
 
 
-import com.d.main.bank.model.Project;
-import com.d.main.bank.model.query.ProjectQuery;
-import com.d.main.bank.service.IProjectService;
+import com.d.main.project.model.Project;
+import com.d.main.project.model.query.ProjectQuery;
+import com.d.main.project.service.IProjectService;
 import com.d.main.common.filter.SecurityUtil;
-import com.d.main.relation.model.HumanInfo;
 import com.dtr.base.dto.BaseExceptionState;
-import com.dtr.util.UUIDUtil;
 import com.dtr.web.dto.ResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 /**
- * 名称：
- * 阐述：
- *
- * @author Administrator
- * @date 2021/2/28 11:02
+ * project 项目接口
+ * 2021/3/9 上午10:20
+ * @author derTraum
+ * @since 1.0.0
  */
 @RestController
 @RequestMapping("/project")
@@ -36,6 +26,14 @@ public class ProjectController {
     @Autowired
     private IProjectService projectService;
 
+    /**
+     * 查询项目接口
+     * 2021/3/9 上午10:13
+     * @author derTraum
+     * @since 1.0.0
+     * @param projectQuery projectQuery
+     * @return com.dtr.web.dto.ResponseVO
+     */
     @PostMapping("/queryProject")
     public ResponseVO queryProject(@RequestBody ProjectQuery projectQuery){
         ResponseVO responseVO = new ResponseVO();
@@ -51,6 +49,14 @@ public class ProjectController {
         }
     }
 
+    /**
+     * 添加项目
+     * 2021/3/9 上午10:21
+     * @author derTraum
+     * @since 1.0.0
+     * @param project 项目
+     * @return com.dtr.web.dto.ResponseVO
+     */
     @PostMapping("/addProject")
     public ResponseVO addProject(@RequestBody Project project){
         ResponseVO responseVO = new ResponseVO();
@@ -69,6 +75,14 @@ public class ProjectController {
         }
     }
 
+    /**
+     * 删除项目
+     * 2021/3/9 上午10:22
+     * @author derTraum
+     * @since 1.0.0
+     * @param project 项目（id）
+     * @return com.dtr.web.dto.ResponseVO
+     */
     @PostMapping("/deleteProject")
     public ResponseVO deleteProject(@RequestBody Project project){
         ResponseVO responseVO = new ResponseVO();
@@ -83,4 +97,6 @@ public class ProjectController {
             return responseVO;
         }
     }
+
+
 }
